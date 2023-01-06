@@ -4,8 +4,6 @@
   import { extractErrors, loginValidateSchema } from '$utils/validates';
   import { GraphQLClient, request, gql } from 'graphql-request'
 
-  
-
   let formValues = {
     email: '',
     pwd: ''
@@ -16,7 +14,7 @@
   const onSubmitLogin = async () => {
     try {
       await loginValidateSchema.validate(formValues, {abortEarly: false});
-      onLogin();
+      loginWithPassword();
     }
     catch(error) {
       errors = await extractErrors(error);
@@ -25,14 +23,28 @@
 
   const onLogin = async () => {
     try {
-      const endpoint = 'http://localhost:4000/graphql'
+      // const res = await fetch("/graphql", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type" : "application/json"
+      //   },
+      //   body: JSON.stringify({query : LOGIN_WITH_PASSWORD})
+      // });
 
-      const graphQLClient = new GraphQLClient(endpoint, {
-      })
-      const result = await graphQLClient.request(LOGIN_WITH_PASSWORD, formValues).then((data) => console.log(data));
-      //const loginWithPassword = request('http://localhost:4000/graphql/', query, {variables: formValues});
+      // console.log(res);
+      // const result = await res.JSON();
+      // console.log(result);
+      // const endpoint = 'http://localhost:3000/graphql'
+      // const graphQLClient = new GraphQLClient(endpoint, {
+      //   method: 'POST',
+      //   jsonSerializer: {
+      //     parse: JSON.parse,
+      //     stringify: JSON.stringify,
+      // },})
+      //const loginWithPassword = await graphQLClient.request(LOGIN_WITH_PASSWORD, formValues).then((data) => console.log(data));
+      const loginWithPassword = request('http://localhost:3000/graphql/', LOGIN_WITH_PASSWORD, {variables: formValues});
       //const result = await loginWithPassword({variables: formValues});
-      authToken.saveAuthToken(result);
+      authToken.saveAuthToken(loginWithPassword);
       router.goto('/');
     }
     catch(error) {
@@ -40,6 +52,22 @@
     }
   }
 
+</script>
+
+<script context="module">
+  export const load = async({ fetch }) => {
+    const res = await fetch("/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(LOGIN_WITH_PASSWORD)
+      });
+
+      console.log(res);
+      const { result } = await res.JSON();
+      console.log(result);
+  }
 </script>
 
 <!-- login form start -->

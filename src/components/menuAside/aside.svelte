@@ -3,6 +3,9 @@
   import OrderBottom from './orderBottom.svelte';
   import OrderResultList from './orderResultList.svelte';
   import OrderComplate from './orderComplate.svelte';
+  import { goto } from '$app/navigation'
+
+  const goLogin = () => goto('/login');
 </script>
 
 <aside> <!-- aside start-->
@@ -10,7 +13,7 @@
     <div class="title-box d-flex align-items-center justify-content-between pl-4 pr-4 pt-4">
       <h2>주문내용</h2>
       <span>
-          <a href="#null" ><i class='bx bx-log-in'></i></a>
+          <a href="#null" on:click={goLogin} ><i class='bx bx-log-in'></i></a>
       </span>
     </div>
     <div class="info-box d-flex justify-content-between align-items-center pl-4 pr-4">

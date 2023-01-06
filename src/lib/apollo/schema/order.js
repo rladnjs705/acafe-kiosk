@@ -1,4 +1,6 @@
-const typeDefs = `
+import { gql } from 'apollo-server-svelte-kit';
+
+const typeDefs = gql`
   type OrderItem {
     _id: ID!
     itemId: ID

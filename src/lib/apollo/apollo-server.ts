@@ -21,17 +21,17 @@ import typeDefsAuth from '$apollo/schema/auth';
 
     const typeDefs = [typeDefsItem, typeDefsOrder, typeDefsAuth ];
     const resolvers = [resolverItem];
-  const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers,
-  });
+    const schema = makeExecutableSchema({
+      typeDefs,
+      resolvers,
+    });
 
-  const wsServer = new WebSocketServer({
-    server: httpServer,
-    path: '/graphql',
-  });
+    const wsServer = new WebSocketServer({
+      server: httpServer,
+      path: '/graphql',
+    });
   
-  const serverCleanup = useServer({ schema }, wsServer);
+    const serverCleanup = useServer({ schema }, wsServer);
 
     const server = new ApolloServer({
         schema,
