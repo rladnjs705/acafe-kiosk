@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client/core';
+import { gql } from "graphql-request"
 
 const ITEM_FIELDS = gql`
   fragment itemFields on Item {
